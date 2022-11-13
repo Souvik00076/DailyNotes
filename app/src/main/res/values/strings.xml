@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">DailyNotes</string>
+    <!--All Hints Goes Here -->
+    <string name="title_hint">Title</string>
+    <string name="date_hint">Date</string>
+    <string name="description_hint">Start Typing</string>
+
+    <!-- Title Goes Here -->
+    <string name="note_menu_title">Save</string>
+    <string name="settings_menu_title">Settings</string>
+    <string name="about_menu_title">About</string>
+    <string name="preference_font_size">Font Size</string>
+    <string name="preference_font_family">Font Styles</string>
+    <string name="key_lp_sizes">Small</string>
+    <string name="grid_view">Grid View</string>
+    <string name="no_text">No Notes To Show Here Yet!!</string>
+    <!-- ids goes here -->
+    <string name="save_note_menu">Save Note</string>
+    <string name="title_et_note">title</string>
+    <string name="date_et_note">date</string>
+    <string name="descriptin_et_note">descp</string>
+    <string name="main_menu_settings">settings</string>
+    <string name="main_menu_about">about</string>
+    <string name="lp_sizes_id">size</string>
+    <string name="recyler_view">page_holder_view</string>
+    <string name="ll_page_holder">page_item</string>
+    <string name="cardview_page_title">page_title</string>
+    <string name="cardview_page_descp">page_descp</string>
+    <string name="cardview_page_date">page_date</string>
+    <string name="cardview_linear_layout">layout</string>
+    <string name="grid_view_id">Grid View</string>
+    <!-- about -->
+    <string name="about_me">This app was created by Souvik Bhattacharjee,Jadavpur University.
+                            This app uses the concept of content provider ,shared preferences,
+                            layout managers,recycler views,UI design fundamentals,
+                            loaders,optimization.</string>
+</resources>

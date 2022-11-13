@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Models.Note">
+
+    <LinearLayout
+        android:id="@+id/note"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/title_hint"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/descp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="@string/description_hint"
+            android:inputType="textMultiLine|textAutoComplete"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/changeColor"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_baseline_palette"
+        android:backgroundTint="@color/white"
+        app:fabCustomSize="40dp"
+        app:rippleColor="@color/black"
+        android:scaleType="fitCenter"/>
+</FrameLayout>

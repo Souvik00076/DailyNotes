@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="font_sizes">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+        <item>Huge</item>
+    </array>
+    <array name="values">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+        <item>Huge</item>
+    </array>
+
+    <string-array name="color_values">
+        <!-- Note color -->
+        <item name="white">#FFFFFFFF</item>
+        <item name="light_green">#85de9d</item>
+        <item name="light_yellow">#ebc783</item>
+        <item name="light_blue">#83cceb</item>
+        <item name="light_orange">#ebb783</item>
+        <item name="light_red">#eb9d83</item>
+        <item name="red">#c33f38</item>
+        <item name="dark_blue">#285885</item>
+        <item name="dark_violet">#320778</item>
+        <item name="dark_red">#61050b</item>
+    </string-array>
+    <string-array name="text_colors">
+        <item name="t_black">#FF000000</item>
+        <item name="t_black">#FF000000</item>
+        <item name="t_black">#FF000000</item>
+        <item name="t_black">#FF000000</item>
+        <item name="t_black">#FF000000</item>
+        <item name="t_black">#FF000000</item>
+        <item name="t_black">#FFFFFFFF</item>
+        <item name="t_black">#FFFFFFFF</item>
+        <item name="t_black">#FFFFFFFF</item>
+        <item name="t_black">#FFFFFFFF</item>
+
+
+    </string-array>
+</resources>
