@@ -143,9 +143,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public boolean onLongPageClick(int position) {
-        Uri currentUri = ContentUris.withAppendedId(DailyNotesContracts.databaseEntry.CONTENT_URI, position);
-        String selectionArgs[] = {String.valueOf(position)};
+    public boolean onLongPageClick(int id) {
+        Uri currentUri = ContentUris.withAppendedId(DailyNotesContracts.databaseEntry.CONTENT_URI, id);
+        String selectionArgs[] = {String.valueOf(id)};
         int rows = getContentResolver().delete(
                 DailyNotesContracts.databaseEntry.CONTENT_URI,
                 DailyNotesContracts.databaseEntry.PAGE_ID + "=?",

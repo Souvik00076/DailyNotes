@@ -6,6 +6,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.dailynotes.Models.Page;
 
@@ -25,4 +26,6 @@ public interface PageDao {
     @Query("DELETE FROM PAGE_ENTRY WHERE " +
             DailyNotesContracts.databaseEntry.PAGE_ID + " = :id ")
     int deletePage(int id);
+    @Update
+    int update(Page page);
 }
