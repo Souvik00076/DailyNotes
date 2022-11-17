@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.dailynotes.Adapters.AppExecutor;
 import com.example.dailynotes.Adapters.ContentAdapter;
 import com.example.dailynotes.Models.Note;
 import com.example.dailynotes.Preferences.Settings;
@@ -145,12 +146,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onLongPageClick(int id) {
         Uri currentUri = ContentUris.withAppendedId(DailyNotesContracts.databaseEntry.CONTENT_URI, id);
-        String selectionArgs[] = {String.valueOf(id)};
-        int rows = getContentResolver().delete(
-                DailyNotesContracts.databaseEntry.CONTENT_URI,
-                DailyNotesContracts.databaseEntry.PAGE_ID + "=?",
-                selectionArgs
-        );
-        return rows != 0;
+        String[] selectionArgs = {String.valueOf(id)};
+        int []flag=new int[1];
+        AppExecutor.getInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                flag[0]=getContentResolver().delete(
+                        DailyNotesContracts.databaseEntry.CONTENT_URI,
+                        DailyNotesContracts.databaseEntry.PAGE_ID + "=?",
+                        selectionArgs
+                );
+            }
+        });
+        return flag[0] != 0;
     }
 }

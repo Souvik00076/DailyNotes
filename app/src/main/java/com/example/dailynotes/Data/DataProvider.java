@@ -15,13 +15,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.dailynotes.Adapters.AppExecutor;
 import com.example.dailynotes.Models.Page;
 
 public class DataProvider extends ContentProvider {
     private static final UriMatcher matcher;
     private static final int PAGES_ID = 110;
     private static final int PAGE_ID = 111;
-    private DatabaseHelper helper;
 
     static {
         matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -31,7 +31,6 @@ public class DataProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        helper = new DatabaseHelper(getContext());
         return true;
     }
 
@@ -39,7 +38,7 @@ public class DataProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArguments, @Nullable String sortOrder) {
         //SQLiteDatabase database = helper.getReadableDatabase();
-        Cursor cursor;
+        Cursor cursor=null;
         int id = matcher.match(uri);
         Context context = getContext();
         if (context == null) return null;
@@ -86,24 +85,25 @@ public class DataProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
         // SQLiteDatabase database = helper.getWritableDatabase();
-        long id = DataBase.getInstance(getContext()).getPageDao().
-                insert(Page.fromContentValues(contentValues));
-        if (id == -1) {
+        Uri returnUri = null;
+        long id = DataBase.getInstance(getContext()).getPageDao().insert(Page.fromContentValues(contentValues));
+        if (id == -1)
             Toast.makeText(getContext(), "EROR OCCURED WHILE INSERTING!!!", Toast.LENGTH_SHORT).show();
-            return null;
-        }
+        else
+            returnUri = DailyNotesContracts.databaseEntry.buildUri((int) id);
         getContext().getContentResolver().notifyChange(uri, null);
-        return uri;
+        return returnUri;
     }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         //SQLiteDatabase database = helper.getWritableDatabase();
         //rowsDeleted = database.delete(DailyNotesContracts.databaseEntry.TABLE_NAME, selection, selectionArgs);
-        int rowsDeleted = DataBase.getInstance(getContext()).getPageDao().
-                deletePage(Integer.parseInt(selectionArgs[0]));
+           int rowsDeleted=DataBase.getInstance(getContext()).getPageDao().
+                        deletePage(Integer.parseInt(selectionArgs[0]));
+
         if (rowsDeleted != 0) getContext().getContentResolver().notifyChange(uri, null);
-        return rowsDeleted;
+        return rowsDeleted;//rowsDeleted;
     }
 
     @Override

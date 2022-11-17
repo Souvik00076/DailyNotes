@@ -26,6 +26,7 @@ public interface PageDao {
     @Query("DELETE FROM PAGE_ENTRY WHERE " +
             DailyNotesContracts.databaseEntry.PAGE_ID + " = :id ")
     int deletePage(int id);
+
     @Update
     int update(Page page);
 }

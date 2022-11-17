@@ -12,7 +12,6 @@ import com.example.dailynotes.Models.Page;
 public abstract class DataBase extends RoomDatabase {
     private static final String DB_NAME = "NotesDatabase.db";
     private static volatile DataBase instance;
-
     static synchronized DataBase getInstance(Context context) {
         if (instance == null) {
             instance = create(context);

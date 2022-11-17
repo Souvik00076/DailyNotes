@@ -19,9 +19,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.dailynotes.Adapters.AppExecutor;
 import com.example.dailynotes.R;
 import com.example.dailynotes.Data.DailyNotesContracts;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.concurrent.Executor;
 
 public class Note extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private EditText showTitle, showDescription;
@@ -90,12 +93,24 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
     private void insertOrUpdate() {
         ContentValues values = insertData();
         int rows = 0;
+        Executor executor = AppExecutor.getInstance().getDiskIO();
         if (null == productUri) {
-            Uri newUri = getContentResolver().insert(DailyNotesContracts.databaseEntry.CONTENT_URI, values);
-        } else {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Uri newUri = getContentResolver().insert(DailyNotesContracts.databaseEntry.CONTENT_URI, values);
+                }
+            });
 
-            values.put(DailyNotesContracts.databaseEntry.PAGE_ID, productID);
-            rows = getContentResolver().update(productUri, values, null, null);
+        } else {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    values.put(DailyNotesContracts.databaseEntry.PAGE_ID, productID);
+                    getContentResolver().update(productUri, values, null, null);
+
+                }
+            });
         }
     }
 
