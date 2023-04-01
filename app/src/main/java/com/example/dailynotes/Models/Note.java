@@ -36,9 +36,10 @@ import com.example.dailynotes.R;
 import com.example.dailynotes.Data.DailyNotesContracts;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 
-public class Note extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class Note extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,RecognitionListener {
     private EditText showTitle, showDescription;
     private Uri productUri;
     private String productID;
@@ -51,6 +52,7 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
     private int pickUpValues;
 
     private SpeechRecognizer recognizer;
+    private Intent recognizerIntent;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -77,52 +79,7 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
             }
         });
 
-        recognizer.setRecognitionListener(new RecognitionListener() {
-            @Override
-            public void onReadyForSpeech(Bundle bundle) {
 
-            }
-
-            @Override
-            public void onBeginningOfSpeech() {
-
-            }
-
-            @Override
-            public void onRmsChanged(float v) {
-
-            }
-
-            @Override
-            public void onBufferReceived(byte[] bytes) {
-
-            }
-
-            @Override
-            public void onEndOfSpeech() {
-
-            }
-
-            @Override
-            public void onError(int i) {
-
-            }
-
-            @Override
-            public void onResults(Bundle bundle) {
-                System.out.println("OnResults executed");
-            }
-
-            @Override
-            public void onPartialResults(Bundle bundle) {
-
-            }
-
-            @Override
-            public void onEvent(int i, Bundle bundle) {
-
-            }
-        });
     }
 
     private void convertSpeech() {
@@ -136,10 +93,7 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
     }
 
     private void onRecordAudioPermissionGranted() {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-        recognizer.startListening(intent);
+        recognizer.startListening(recognizerIntent);
     }
 
     private void setColor(int pickUpValues) {
@@ -235,7 +189,10 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
         colorValues = getResources().getStringArray(R.array.color_values);
         textColors = getResources().getStringArray(R.array.text_colors);
         speech = (FloatingActionButton) findViewById(R.id.speech);
-        recognizer = SpeechRecognizer.createSpeechRecognizer(Note.this);
+        recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        recognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        recognizer.setRecognitionListener(this);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
     }
 
     @NonNull
@@ -270,6 +227,55 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+
+    }
+
+    @Override
+    public void onReadyForSpeech(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onBeginningOfSpeech() {
+
+    }
+
+    @Override
+    public void onRmsChanged(float v) {
+
+    }
+
+    @Override
+    public void onBufferReceived(byte[] bytes) {
+
+    }
+
+    @Override
+    public void onEndOfSpeech() {
+            recognizer.stopListening();
+    }
+
+    @Override
+    public void onError(int i) {
+
+    }
+
+    @Override
+    public void onResults(Bundle bundle) {
+
+        List<String> result = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        for (String partial : result) {
+            showDescription.append(partial + " ");
+        }
+    }
+
+    @Override
+    public void onPartialResults(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onEvent(int i, Bundle bundle) {
 
     }
 }
