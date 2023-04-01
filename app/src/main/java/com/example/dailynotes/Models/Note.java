@@ -3,19 +3,31 @@ package com.example.dailynotes.Models;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
+import android.text.PrecomputedText;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -32,11 +44,15 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
     private String productID;
     private LinearLayout layout;
     private static final int LOADER_NO = 2;
-    private FloatingActionButton fab;
+    private FloatingActionButton changeColor;
+    private FloatingActionButton speech;
     private String[] colorValues;
     private String[] textColors;
     private int pickUpValues;
 
+    private SpeechRecognizer recognizer;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +65,81 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
             LoaderManager.getInstance(this).initLoader(LOADER_NO, null, this);
         }
 
-        fab.setOnClickListener(view -> {
+        changeColor.setOnClickListener(view -> {
             pickUpValues++;
             if (pickUpValues == colorValues.length) pickUpValues = 0;
             setColor(pickUpValues);
         });
+        speech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                convertSpeech();
+            }
+        });
+
+        recognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle bundle) {
+
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+
+            }
+
+            @Override
+            public void onRmsChanged(float v) {
+
+            }
+
+            @Override
+            public void onBufferReceived(byte[] bytes) {
+
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+
+            }
+
+            @Override
+            public void onError(int i) {
+
+            }
+
+            @Override
+            public void onResults(Bundle bundle) {
+                System.out.println("OnResults executed");
+            }
+
+            @Override
+            public void onPartialResults(Bundle bundle) {
+
+            }
+
+            @Override
+            public void onEvent(int i, Bundle bundle) {
+
+            }
+        });
+    }
+
+    private void convertSpeech() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            onRecordAudioPermissionGranted();
+        } else {
+            int PERMISSIONS_REQUEST = 1;
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST);
+        }
+
+    }
+
+    private void onRecordAudioPermissionGranted() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        recognizer.startListening(intent);
     }
 
     private void setColor(int pickUpValues) {
@@ -70,6 +156,7 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -114,6 +201,15 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (recognizer != null) {
+            recognizer.destroy();
+            recognizer = null;
+        }
+    }
+
     private ContentValues insertData() {
         ContentValues values = new ContentValues();
         String title = showTitle.getText().toString().trim();
@@ -135,9 +231,11 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
         layout = findViewById(R.id.note);
         showDescription = layout.findViewById(R.id.descp);
         showTitle = layout.findViewById(R.id.title);
-        fab = findViewById(R.id.changeColor);
+        changeColor = findViewById(R.id.changeColor);
         colorValues = getResources().getStringArray(R.array.color_values);
         textColors = getResources().getStringArray(R.array.text_colors);
+        speech = (FloatingActionButton) findViewById(R.id.speech);
+        recognizer = SpeechRecognizer.createSpeechRecognizer(Note.this);
     }
 
     @NonNull

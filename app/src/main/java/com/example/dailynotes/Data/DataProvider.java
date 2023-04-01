@@ -6,8 +6,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -60,12 +58,7 @@ public class DataProvider extends ContentProvider {
             case PAGES_ID:
                 cursor = pageDao.loadAllPages();
                 break;
-                /*
-                cursor = database.query(DailyNotesContracts.databaseEntry.TABLE_NAME,
-                        projection, selection, selectionArguments, null, null, sortOrder);
-                cursor.setNotificationUri(getContext().getContentResolver(), uri);
-                break;
-                */
+
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
@@ -108,15 +101,6 @@ public class DataProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        /*
-        SQLiteDatabase database = helper.getWritableDatabase();
-        String title = values.getAsString(DailyNotesContracts.databaseEntry.TITLE_COL);
-        selection = DailyNotesContracts.databaseEntry.PAGE_ID + "=?";
-        selectionArgs = new String[]{values.getAsString(DailyNotesContracts.databaseEntry.PAGE_ID)};
-        if (title == null || title.length() == 0)
-            throw new IllegalArgumentException("Note Require a title");
-
-         */
         final Page page = Page.fromContentValues(values);
         if (page == null || page.getTitle() == null || page.getTitle().isEmpty())
             throw new IllegalArgumentException("Note Require a title");
