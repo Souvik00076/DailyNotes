@@ -16,22 +16,23 @@
         <EditText
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/_48dp"
+            android:layout_marginTop="@dimen/_10dp"
             android:background="@android:color/transparent"
             android:hint="@string/title_hint"
             android:inputType="text"
-            android:padding="10dp"
+            android:padding="@dimen/_10dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/descp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="@dimen/_48dp"
             android:background="@android:color/transparent"
             android:hint="@string/description_hint"
             android:inputType="textMultiLine|textAutoComplete"
-            android:padding="10dp" />
+            android:padding="@dimen/_10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,28 +41,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="@dimen/_30dp"
+        android:layout_marginBottom="@dimen/_30dp"
         android:orientation="vertical">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/speech"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_48dp"
+            android:layout_height="@dimen/_48dp"
             android:backgroundTint="@color/white"
             android:scaleType="fitCenter"
             android:src="@drawable/speech"
-            app:fabCustomSize="40dp"
-            app:rippleColor="@color/black" />
+            app:fabCustomSize="@dimen/_48dp"
+            app:rippleColor="@color/black"
+            android:layout_margin="@dimen/_10dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/changeColor"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_48dp"
+            android:layout_height="@dimen/_48dp"
             android:backgroundTint="@color/white"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_baseline_palette"
-            app:fabCustomSize="40dp"
+            app:fabCustomSize="@dimen/_48dp"
+            android:layout_margin="@dimen/_10dp"
             app:rippleColor="@color/black" />
     </LinearLayout>
 

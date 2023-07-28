@@ -10,30 +10,30 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newNote"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_48dp"
+        android:layout_height="@dimen/_48dp"
         android:layout_gravity="bottom|right"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="@dimen/_30dp"
+        android:layout_marginBottom="@dimen/_30dp"
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_baseline_add_50"
-        app:fabCustomSize="50dp"
+        app:fabCustomSize="@dimen/_48dp"
         app:rippleColor="@color/black" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/page_holder_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_margin="@dimen/_10dp" />
 
     <TextView
         android:id="@+id/no_text_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="10dp"
+        android:padding="@dimen/_10dp"
         android:text="@string/no_text"
-        android:textSize="20sp"
+        android:textSize="@dimen/_20sp"
         android:textStyle="bold"
         android:textColor="@color/dark_green"
         android:textAlignment="center" />
