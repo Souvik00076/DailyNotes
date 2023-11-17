@@ -1,71 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Models.Note">
 
-    <LinearLayout
-        android:id="@+id/note"
+    <data>
+
+        <variable
+            name="notemodel"
+            type="com.example.dailynotes.viewmodels.NoteModel" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:backgroundTint="@{notemodel.backgroundObservable}">
 
-        <EditText
-            android:id="@+id/title"
+        <LinearLayout
+            android:id="@+id/note"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_48dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/title_hint"
-            android:inputType="text"
-            android:padding="@dimen/_10dp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/descp"
-            android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_48dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@android:color/transparent"
+                android:hint="@string/title_hint"
+                android:inputType="text"
+                android:padding="@dimen/_10dp"
+                android:text="@{notemodel.title}"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/descp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="@string/description_hint"
+                android:inputType="textMultiLine|textAutoComplete"
+                android:minHeight="@dimen/_48dp"
+                android:padding="@dimen/_10dp"
+                android:text="@{notemodel.description}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/icons"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/_48dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/description_hint"
-            android:inputType="textMultiLine|textAutoComplete"
-            android:padding="@dimen/_10dp" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/_30dp"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/icons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="@dimen/_30dp"
-        android:layout_marginBottom="@dimen/_30dp"
-        android:orientation="vertical">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/speech"
+                android:layout_width="@dimen/_48dp"
+                android:layout_height="@dimen/_48dp"
+                android:layout_margin="@dimen/_10dp"
+                android:backgroundTint="@color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/speech"
+                app:fabCustomSize="@dimen/_48dp"
+                app:rippleColor="@color/black" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/speech"
-            android:layout_width="@dimen/_48dp"
-            android:layout_height="@dimen/_48dp"
-            android:backgroundTint="@color/white"
-            android:scaleType="fitCenter"
-            android:src="@drawable/speech"
-            app:fabCustomSize="@dimen/_48dp"
-            app:rippleColor="@color/black"
-            android:layout_margin="@dimen/_10dp"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/changeColor"
+                android:layout_width="@dimen/_48dp"
+                android:layout_height="@dimen/_48dp"
+                android:layout_margin="@dimen/_10dp"
+                android:backgroundTint="@color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_baseline_palette"
+                app:fabCustomSize="@dimen/_48dp"
+                app:rippleColor="@color/black"
+                android:onClick="@{() -> notemodel.setColor()}"/>
+        </LinearLayout>
+    </RelativeLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/changeColor"
-            android:layout_width="@dimen/_48dp"
-            android:layout_height="@dimen/_48dp"
-            android:backgroundTint="@color/white"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_palette"
-            app:fabCustomSize="@dimen/_48dp"
-            android:layout_margin="@dimen/_10dp"
-            app:rippleColor="@color/black" />
-    </LinearLayout>
 
-</RelativeLayout>
+</layout>

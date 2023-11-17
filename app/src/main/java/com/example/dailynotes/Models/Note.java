@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -34,12 +35,14 @@ import android.widget.Toast;
 import com.example.dailynotes.Adapters.AppExecutor;
 import com.example.dailynotes.R;
 import com.example.dailynotes.Data.DailyNotesContracts;
+import com.example.dailynotes.databinding.ActivityNoteBinding;
+import com.example.dailynotes.viewmodels.NoteModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 
-public class Note extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,RecognitionListener {
+public class Note extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, RecognitionListener {
     private EditText showTitle, showDescription;
     private Uri productUri;
     private String productID;
@@ -53,12 +56,22 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
 
     private SpeechRecognizer recognizer;
     private Intent recognizerIntent;
+    public NoteModel noteModel;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        ActivityNoteBinding noteBinding = DataBindingUtil
+                .setContentView(this, R.layout.activity_note);
+        noteModel = new NoteModel(getResources(), this);
+        noteBinding.setNotemodel(noteModel);
+        noteBinding.setLifecycleOwner(this);
+        /*
         setContentView(R.layout.activity_note);
+        noteModel=new NoteModel()
+
         if (null != getSupportActionBar()) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initViews();
         productUri = getIntent().getData();
@@ -78,7 +91,7 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
                 convertSpeech();
             }
         });
-
+    */
 
     }
 
@@ -96,7 +109,7 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
         recognizer.startListening(recognizerIntent);
     }
 
-    private void setColor(int pickUpValues) {
+    public void setColor(int pickUpValues) {
         layout.setBackgroundColor(Color.parseColor(colorValues[pickUpValues]));
         showTitle.setHintTextColor(Color.parseColor(textColors[pickUpValues]));
         showTitle.setTextColor(Color.parseColor(textColors[pickUpValues]));
@@ -119,12 +132,14 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
                 onBackPressed();
                 return true;
             case R.id.Save_Note:
-                if (getValidityChecked()) {
+
+                /*if (getValidityChecked()) {
                     Toast.makeText(this, "Title Missing", Toast.LENGTH_SHORT).show();
                 } else {
                     insertOrUpdate();
                     onBackPressed();
-                }
+                }*/
+                noteModel.onSaveClick();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -221,7 +236,8 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
         for (int i = 0; i < colorValues.length; i++)
             if (colorValues[i].equals(color))
                 pickUpValues = i;
-        setColor(pickUpValues);
+        //setColor(pickUpValues);
+
         LoaderManager.getInstance(this).destroyLoader(LOADER_NO);
     }
 
@@ -252,7 +268,7 @@ public class Note extends AppCompatActivity implements LoaderManager.LoaderCallb
 
     @Override
     public void onEndOfSpeech() {
-            recognizer.stopListening();
+        recognizer.stopListening();
     }
 
     @Override

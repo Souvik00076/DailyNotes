@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/design"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newNote"
-        android:layout_width="@dimen/_48dp"
-        android:layout_height="@dimen/_48dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginEnd="@dimen/_30dp"
-        android:layout_marginBottom="@dimen/_30dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_baseline_add_50"
-        app:fabCustomSize="@dimen/_48dp"
-        app:rippleColor="@color/black" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/page_holder_view"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/_10dp" />
+        android:background="@drawable/design"
+        >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/newNote"
+            android:layout_width="@dimen/_48dp"
+            android:layout_height="@dimen/_48dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="@dimen/_30dp"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_add_50"
+            app:fabCustomSize="@dimen/_48dp"
+            app:rippleColor="@color/black" />
 
-    <TextView
-        android:id="@+id/no_text_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/_10dp"
-        android:text="@string/no_text"
-        android:textSize="@dimen/_20sp"
-        android:textStyle="bold"
-        android:textColor="@color/dark_green"
-        android:textAlignment="center" />
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/page_holder_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10dp" />
+
+        <TextView
+            android:id="@+id/no_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/_10dp"
+            android:text="@string/no_text"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_green"
+            android:textAlignment="center" />
+    </FrameLayout>
+
+</layout>
