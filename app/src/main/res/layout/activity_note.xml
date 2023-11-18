@@ -31,7 +31,7 @@
                 android:hint="@string/title_hint"
                 android:inputType="text"
                 android:padding="@dimen/_10dp"
-                android:text="@{notemodel.title}"
+                android:text="@={notemodel.title}"
                 android:textStyle="bold" />
 
             <EditText
@@ -43,7 +43,7 @@
                 android:inputType="textMultiLine|textAutoComplete"
                 android:minHeight="@dimen/_48dp"
                 android:padding="@dimen/_10dp"
-                android:text="@{notemodel.description}" />
+                android:text="@={notemodel.description}" />
         </LinearLayout>
 
         <LinearLayout
